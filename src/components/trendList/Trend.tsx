@@ -17,6 +17,11 @@ interface GifObject {
 
 interface TrendingGifsResponse {
   data: GifObject[];
+  pagination: {
+    total_count: number;
+    count: number;
+    offset: number;
+  };
 }
 
 const TrendingGifs: React.FC<TrendingGifsProps> = ({ apiKey }) => {
@@ -28,7 +33,7 @@ const TrendingGifs: React.FC<TrendingGifsProps> = ({ apiKey }) => {
       try {
         setLoading(true);
         const response = await axios.get<TrendingGifsResponse>(
-          `https://api.giphy.com/v1/gifs/trending?api_key=${apiKey}&limit=10`
+          `https://api.giphy.com/v1/gifs/trending?api_key=${apiKey}&limit=30`
         );
         const data = response.data.data;
         setTrendingGifs(data);

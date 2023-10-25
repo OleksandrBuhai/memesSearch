@@ -3,9 +3,11 @@ import axios from 'axios';
 import SearchBar from './components/searchBar/SearchBar';
 import MemeList from './components/memeList/MemeList';
 import { Meme } from './types/types';
-import SuggestedMemes from './components/suggestionList/Suggestion';
+
 import SearchSuggestions from './components/suggestionList/Suggestion';
 import TrendingGifs from './components/trendList/Trend';
+import  { GifCategoriesList } from './components/categoriesList/CategoriesList';
+import { GifCategories } from './components/categoriesList/CategoriesGif';
 
 
 
@@ -15,13 +17,13 @@ const App: React.FC = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedMeme, setSelectedMeme] = useState<Meme | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
  
 
   const apiKey = 'DoPGRvp1BVmbGNWdzUyfgiE8gWA2TH0S';
 
   const fetchMemes = () => {
 
-   
     const limit = 10;
     const apiUrl = `https://api.giphy.com/v1/gifs/search?q=${searchTerm}&api_key=${apiKey}&limit=${limit}&offset=${(page - 1) * limit}`;
 
@@ -83,7 +85,8 @@ const App: React.FC = () => {
         </div>
       
       )}
-      
+      <GifCategoriesList onSelectCategory={setSelectedCategoryId} />
+      <GifCategories selectedCategoryId={selectedCategoryId}/>
         <TrendingGifs apiKey={apiKey}/>
     
       <div>
