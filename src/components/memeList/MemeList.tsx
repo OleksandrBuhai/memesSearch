@@ -8,6 +8,7 @@ interface MemeListProps {
 
 const MemeList: React.FC<MemeListProps> = ({ memes, onMemeClick }) => {
 
+
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '20px' }}>
           {memes.map((meme) => (

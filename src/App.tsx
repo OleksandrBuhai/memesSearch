@@ -1,58 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import SearchBar from './components/searchBar/SearchBar';
 import MemeList from './components/memeList/MemeList';
+import SearchBar from './components/searchBar/SearchBar';
 import { Meme } from './types/types';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMemes } from './api/api';
+import { GifCategories } from './components/categoriesList/CategoriesGif';
+import { GifCategoriesList } from './components/categoriesList/CategoriesList';
+import { setPage } from './slices/searchSlice/searchSlice';
+import { AppThunkDispatch, RootState } from './slices/store';
 import SearchSuggestions from './components/suggestionList/Suggestion';
 import TrendingGifs from './components/trendList/Trend';
-import  { GifCategoriesList } from './components/categoriesList/CategoriesList';
-import { GifCategories } from './components/categoriesList/CategoriesGif';
 
 
 
 const App: React.FC = () => {
-  const [memes, setMemes] = useState<Meme[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+
   const [selectedMeme, setSelectedMeme] = useState<Meme | null>(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
- 
 
-  const apiKey = 'DoPGRvp1BVmbGNWdzUyfgiE8gWA2TH0S';
+  const { memes, page, searchTerm, totalPages } = useSelector((state: RootState) => state.searchReducer);
 
-  const fetchMemes = () => {
-
-    const limit = 10;
-    const apiUrl = `https://api.giphy.com/v1/gifs/search?q=${searchTerm}&api_key=${apiKey}&limit=${limit}&offset=${(page - 1) * limit}`;
-
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        console.log(response.data)
-        setMemes(response.data.data);
-        setTotalPages(Math.ceil(response.data.pagination.total_count / limit));
-        setSelectedMeme(null);
-      })
-      .catch((error) => console.error('Error fetching memes:', error));
-  };
-
-
-  
-
+  const dispatch = useDispatch<AppThunkDispatch>();
 
   useEffect(() => {
-    if (searchTerm) {
-      fetchMemes();
-    }
-  }, [searchTerm, page]);
-
-
+    dispatch(fetchMemes({ searchTerm: '', page }))
+  }, [dispatch])
 
   const handleSearch = (term: string) => {
-    setSearchTerm(term);
-    setPage(1);
+
   };
 
   const handlePageChange = (newPage: number) => {
@@ -62,8 +37,6 @@ const App: React.FC = () => {
   };
 
   const handleMemeClick = (meme: Meme) => {
-    const selectedMemeUrl = meme.images.fixed_height.url;
-
     setSelectedMeme(meme);
   };
 
@@ -81,14 +54,14 @@ const App: React.FC = () => {
           />
           <p>{selectedMeme.title}</p>
           <p>{selectedMeme.source}</p>
-          <SearchSuggestions apiKey={apiKey} term={searchTerm}/>
+          <SearchSuggestions term={searchTerm} onMemeClick={handleMemeClick}/>
         </div>
-      
+
       )}
       <GifCategoriesList onSelectCategory={setSelectedCategoryId} />
-      <GifCategories selectedCategoryId={selectedCategoryId}/>
-        <TrendingGifs apiKey={apiKey}/>
-    
+      <GifCategories selectedCategoryId={selectedCategoryId} />
+      <TrendingGifs onMemeClick={handleMemeClick} />
+
       <div>
         <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
           Previous Page

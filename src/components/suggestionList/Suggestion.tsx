@@ -1,63 +1,56 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSuggestion } from '../../api/api';
+import { AppThunkDispatch, RootState } from '../../slices/store';
+import { Meme } from '../../types/types';
+import { setSelectedMeme, setSimilarMemes } from '../../slices/searchSlice/searchSlice';
 
 interface SearchSuggestionsProps {
-  apiKey: string;
+  onMemeClick: (meme: Meme) => void;
   term: string;
 }
 
-interface GifObject {
-  id: string;
-  title: string;
-  images: {
-    fixed_height: {
-      url: string;
-    };
-  };
-}
 
-interface SearchSuggestionsResponse {
-  data: GifObject[];
-}
 
-const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ apiKey, term }) => {
-  const [suggestions, setSuggestions] = useState<GifObject[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchSuggestions = async () => {
+const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({  term, onMemeClick }) => {
+ 
+    const suggestions = useSelector((state:RootState)=> state.suggestionReducer.suggestions)
+
+    const dispatch = useDispatch<AppThunkDispatch>();
+
+    useEffect(()=>{
+      dispatch(fetchSuggestion({term}))
+      
+    },[dispatch,term])
+
+    const handleMemeClick = async (meme: Meme) => {
+      dispatch(setSelectedMeme(meme));
+      onMemeClick(meme);
       try {
-        setLoading(true);
-        const response = await axios.get<SearchSuggestionsResponse>(
-          `https://api.giphy.com/v1/gifs/search?q=${encodeURIComponent(term)}&api_key=${apiKey}`
-        );
-        const data = response.data.data;
-        setSuggestions(data);
+        const similarMemes:any = await dispatch(fetchSuggestion({ term: meme.title }));
+        dispatch(setSimilarMemes(similarMemes));
       } catch (error) {
-        console.error('Error fetching search suggestions:', error);
-      } finally {
-        setLoading(false);
+        console.error('Error fetching similar memes:', error);
       }
     };
+  
 
-    fetchSuggestions();
-  }, [apiKey, term]);
 
   return (
     <div>
       <h2>Search Suggestions</h2>
-      {loading ? (
-        <p>Loading suggestions...</p>
-      ) : (
+    
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '20px',gap:'20px'}}>
-          {suggestions.map((suggestion) => (
-            <div key={suggestion.id}>
-              <img src={suggestion.images.fixed_height.url} alt={suggestion.title} style={{ width: '100px', height: '100px' }} />
+          {suggestions.map((gif) => (
+            <div key={gif.id} onClick={()=>handleMemeClick(gif)}>
+              <img src={gif.images.fixed_height.url} alt={gif.title} style={{ width: '100px', height: '100px' }} />
               
             </div>
           ))}
         </div>
-      )}
+    
+    
     </div>
   );
 };

@@ -1,61 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSuggestion, fetchTrendingGif } from '../../api/api';
+import { AppThunkDispatch, RootState } from '../../slices/store';
+import { setSelectedMeme, setSimilarMemes } from '../../slices/searchSlice/searchSlice';
+import { Meme } from '../../types/types';
 
-interface TrendingGifsProps {
-  apiKey: string;
+interface TrendingGifsType {
+  onMemeClick: (meme: Meme) => void;
 }
 
-interface GifObject {
-  id: string;
-  title: string;
-  images: {
-    fixed_height: {
-      url: string;
-    };
+const TrendingGifs: React.FC<TrendingGifsType> = ({onMemeClick}) => {
+
+  const trendingGif = useSelector((state:RootState)=> state.trendingGifReducer.trendingGifs) 
+
+  const dispatch = useDispatch<AppThunkDispatch>()
+
+
+   useEffect(() => {
+   dispatch(fetchTrendingGif())
+  }, [dispatch]);
+
+  const handleMemeClick = async (meme: Meme) => {
+    dispatch(setSelectedMeme(meme));
+    onMemeClick(meme);
+    try {
+      const similarMemes:any = await dispatch(fetchSuggestion({ term: meme.title }));
+      dispatch(setSimilarMemes(similarMemes));
+    } catch (error) {
+      console.error('Error fetching similar memes:', error);
+    }
   };
-}
-
-interface TrendingGifsResponse {
-  data: GifObject[];
-  pagination: {
-    total_count: number;
-    count: number;
-    offset: number;
-  };
-}
-
-const TrendingGifs: React.FC<TrendingGifsProps> = ({ apiKey }) => {
-  const [trendingGifs, setTrendingGifs] = useState<GifObject[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchTrendingGifs = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get<TrendingGifsResponse>(
-          `https://api.giphy.com/v1/gifs/trending?api_key=${apiKey}&limit=30`
-        );
-        const data = response.data.data;
-        setTrendingGifs(data);
-      } catch (error) {
-        console.error('Error fetching trending gifs:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTrendingGifs();
-  }, [apiKey]);
 
   return (
     <div>
       <h2>Trending Gifs</h2>
-      {loading ? (
-        <p>Loading trending gifs...</p>
-      ) : (
+     
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '20px',gap:'20px'}}>
-          {trendingGifs.map((gif) => (
-            <div key={gif.id}>
+          {trendingGif.map((gif) => (
+            <div key={gif.id}  onClick={() => handleMemeClick(gif)}>
               <img
                 src={gif.images.fixed_height.url}
                 alt={gif.title}
@@ -64,7 +46,7 @@ const TrendingGifs: React.FC<TrendingGifsProps> = ({ apiKey }) => {
             </div>
           ))}
         </div>
-      )}
+    
     </div>
   );
 };
