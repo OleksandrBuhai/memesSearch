@@ -22,6 +22,20 @@ export const fetchMemes = createAsyncThunk('search/fetchMemes', async ({ searchT
 });
 
 
+export const getRandomGif = async (): Promise<string> => {
+  try {
+    const response = await fetch(`${BASE_URL}random?api_key=${API_KEY}`);
+    const data = await response.json();
+    const gifUrl = data.data.images.original.url;
+    return gifUrl || 'default_url_if_empty';
+  } catch (error) {
+    console.error('Error fetching random gif:', error);
+    return 'default_url_if_error';
+  }
+};
+
+
+
 export const fetchSuggestion = createAsyncThunk('search/suggestion', async ({ term }: { term: string }) => {
   try {
     const response = await axios.get(`${BASE_URL}search?q=${encodeURIComponent(term)}&api_key=${API_KEY}`)
@@ -36,7 +50,7 @@ export const fetchSuggestion = createAsyncThunk('search/suggestion', async ({ te
 
 export const fetchTrendingGif = createAsyncThunk('search/trending', async () => {
   try {
-    const response = await axios.get(`${BASE_URL}trending?api_key=${API_KEY}&limit=30`)
+    const response = await axios.get(`${BASE_URL}trending?api_key=${API_KEY}`)
     return response.data.data
   }
   catch (error: any) {

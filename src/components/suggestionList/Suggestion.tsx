@@ -4,6 +4,8 @@ import { fetchSuggestion } from '../../api/api';
 import { AppThunkDispatch, RootState } from '../../slices/store';
 import { Meme } from '../../types/types';
 import { setSelectedMeme, setSimilarMemes } from '../../slices/searchSlice/searchSlice';
+import { Img } from '../../styles/Img';
+import { MemeWrapper } from '../../styles/MemeWrapper';
 
 interface SearchSuggestionsProps {
   onMemeClick: (meme: Meme) => void;
@@ -41,14 +43,15 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({  term, onMemeClic
     <div>
       <h2>Search Suggestions</h2>
     
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '20px',gap:'20px'}}>
+        <MemeWrapper>
           {suggestions.map((gif) => (
             <div key={gif.id} onClick={()=>handleMemeClick(gif)}>
-              <img src={gif.images.fixed_height.url} alt={gif.title} style={{ width: '100px', height: '100px' }} />
+              
+              <Img src={gif.images.fixed_height.url} alt={gif.title} />
               
             </div>
           ))}
-        </div>
+        </MemeWrapper>
     
     
     </div>

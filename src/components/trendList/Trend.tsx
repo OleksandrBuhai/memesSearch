@@ -4,17 +4,20 @@ import { fetchSuggestion, fetchTrendingGif } from '../../api/api';
 import { AppThunkDispatch, RootState } from '../../slices/store';
 import { setSelectedMeme, setSimilarMemes } from '../../slices/searchSlice/searchSlice';
 import { Meme } from '../../types/types';
+import { Img } from '../../styles/Img';
+import { MemeWrapper } from '../../styles/MemeWrapper';
+import { useNavigate } from 'react-router-dom';
 
 interface TrendingGifsType {
-  onMemeClick: (meme: Meme) => void;
+ 
 }
 
-const TrendingGifs: React.FC<TrendingGifsType> = ({onMemeClick}) => {
+const TrendingGifs: React.FC<TrendingGifsType> = ({}) => {
 
   const trendingGif = useSelector((state:RootState)=> state.trendingGifReducer.trendingGifs) 
 
   const dispatch = useDispatch<AppThunkDispatch>()
-
+  const navigate = useNavigate()
 
    useEffect(() => {
    dispatch(fetchTrendingGif())
@@ -22,10 +25,11 @@ const TrendingGifs: React.FC<TrendingGifsType> = ({onMemeClick}) => {
 
   const handleMemeClick = async (meme: Meme) => {
     dispatch(setSelectedMeme(meme));
-    onMemeClick(meme);
+    
     try {
       const similarMemes:any = await dispatch(fetchSuggestion({ term: meme.title }));
       dispatch(setSimilarMemes(similarMemes));
+      navigate('/selecetedMem');
     } catch (error) {
       console.error('Error fetching similar memes:', error);
     }
@@ -35,17 +39,17 @@ const TrendingGifs: React.FC<TrendingGifsType> = ({onMemeClick}) => {
     <div>
       <h2>Trending Gifs</h2>
      
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '20px',gap:'20px'}}>
+        <MemeWrapper >
           {trendingGif.map((gif) => (
             <div key={gif.id}  onClick={() => handleMemeClick(gif)}>
-              <img
+
+              <Img
                 src={gif.images.fixed_height.url}
-                alt={gif.title}
-                style={{ width: '100px', height: '100px' }}
+                alt={gif.title} 
               />
             </div>
           ))}
-        </div>
+        </MemeWrapper>
     
     </div>
   );
