@@ -19,7 +19,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     const handleSearch = () => {
         onSearch(searchTerm);
         dispatch(setSearchTerm(searchTerm))
-        dispatch(fetchMemes({searchTerm, page:1}))
+        dispatch(fetchMemes({searchTerm, }))
     };
 
     return (

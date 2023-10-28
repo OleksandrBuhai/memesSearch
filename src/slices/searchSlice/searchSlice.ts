@@ -51,7 +51,7 @@ const searchSlice = createSlice({
       })
       .addCase(fetchMemes.fulfilled, (state, action) => {
         state.memes = action.payload.memes;
-        state.totalPages = action.payload.totalPages;
+        
         state.loading = false;
         state.selectedMeme = null;
       })

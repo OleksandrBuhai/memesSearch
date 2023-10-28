@@ -9,7 +9,7 @@ const App: React.FC = () => {
 
 
   const handleSearch = (term: string) => {
-
+    console.log(term)
   };
   
   return (
