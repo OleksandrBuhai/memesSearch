@@ -5,6 +5,7 @@ import { fetchMemes } from '../../api/api';
 import { setSearchTerm } from '../../slices/searchSlice/searchSlice';
 import { AppThunkDispatch } from '../../slices/store';
 import { AnimatedButton, SearchInput } from './style/Styles';
+import { baseURL } from '../../router';
 
 interface SearchBarProps {
     onSearch: (term: string) => void;
@@ -30,7 +31,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                 value={searchTerm}
                 onChange={(e) => setTerm(e.target.value)}
             />
-           <Link style={{width:'10%'}}   to="/seacrhable"> <AnimatedButton 
+           <Link style={{width:'10%'}}   to={`${baseURL}/searchable`}> <AnimatedButton 
         
            onClick={handleSearch}>Search</AnimatedButton> </Link>
         </div>

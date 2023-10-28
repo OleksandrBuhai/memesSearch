@@ -5,7 +5,7 @@ import { Categories } from "../categoriesList/Categories";
 import MemeList from "../memeList/MemeList";
 import { SelectedMem } from "../selectedMem/SelectedMem";
 import TrendingGifs from "../trendList/Trend";
-
+import { baseURL } from "../../router";
 
 
 export const Main: React.FC = () => {
@@ -15,17 +15,14 @@ export const Main: React.FC = () => {
 
 
     return (
-        <>
-            <Routes>
-                <Route path="/" element={<TrendingGifs />} />
-                <Route path="/categories" element={<Categories />} />
-                <Route path="/seacrhable" element={<MemeList />} />
-                {selectedMeme && (
-               <Route path="/selecetedMem" element={<SelectedMem/>} />
-
-             )}
-            </Routes>
-
-        </>
+       <Routes>
+            {/* Змініть шлях на '/' */}
+            <Route path={`${baseURL}`} element={<TrendingGifs />} />
+            <Route path={`${baseURL}/categories`} element={<Categories />} />
+            <Route path={`${baseURL}/searchable`} element={<MemeList />} />
+            {selectedMeme && (
+                <Route path={`${baseURL}/selectedMem`} element={<SelectedMem />} />
+            )}
+        </Routes>
     )
 }

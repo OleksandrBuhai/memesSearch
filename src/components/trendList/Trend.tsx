@@ -8,6 +8,7 @@ import { Img } from '../../styles/Img';
 import { MemeWrapper } from '../../styles/MemeWrapper';
 import { useNavigate } from 'react-router-dom';
 import { StyledHeader } from '../../styles/HeaderTextStyle';
+import { baseURL } from '../../router';
 
 interface TrendingGifsType {
  
@@ -30,7 +31,7 @@ const TrendingGifs: React.FC<TrendingGifsType> = ({}) => {
     try {
       const similarMemes:any = await dispatch(fetchSuggestion({ term: meme.title }));
       dispatch(setSimilarMemes(similarMemes));
-      navigate('/selecetedMem');
+      navigate(`${baseURL}/selectedMem`);
     } catch (error) {
       console.error('Error fetching similar memes:', error);
     }

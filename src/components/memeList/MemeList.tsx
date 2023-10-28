@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../slices/store';
 import { setSelectedMeme } from '../../slices/searchSlice/searchSlice';
 import { useNavigate } from 'react-router-dom';
+import { baseURL } from '../../router';
 
 
 
@@ -21,7 +22,7 @@ const MemeList: React.FC= () => {
 
   const onHandleClick = (meme: Meme) => {
     dispatch(setSelectedMeme(meme))
-    navigate('/selecetedMem');
+    navigate(`${baseURL}/selectedMem`);
   }
 
 
