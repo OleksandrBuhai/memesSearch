@@ -4,6 +4,7 @@ import { Img } from "../../styles/Img"
 import { Meme } from "../../types/types"
 import SearchSuggestions from "../suggestionList/Suggestion"
 import { RootState } from "../../slices/store"
+import { StyledHeader } from "../../styles/HeaderTextStyle"
 
 
 
@@ -20,15 +21,19 @@ export const SelectedMem:React.FC  = () => {
     
 
     return (
-        <div>
-        <h2>Selected Meme</h2>
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <StyledHeader>Selected Meme</StyledHeader>
         <Img
             src={selectedMeme!.images.fixed_height.url}
             alt={selectedMeme!.title}
 
         />
-        <p>{selectedMeme!.title}</p>
-        <p>{selectedMeme!.source}</p>
+        <div style={{display:'flex', flexDirection:'column'}}>
+        <p style={{fontSize:'2rem', color:'white'}}>{selectedMeme!.title}</p>
+        <p style={{fontSize:'2rem',color:'white'}}><a 
+        style={{textDecoration:'none', color:'white'}}
+        href={selectedMeme?.source}>Go to {selectedMeme!.source}</a></p>
+        </div>
         <SearchSuggestions term={selectedMeme!.term} onMemeClick={onHandleClick} />
     </div>
     )

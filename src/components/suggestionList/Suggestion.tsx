@@ -6,6 +6,7 @@ import { Meme } from '../../types/types';
 import { setSelectedMeme, setSimilarMemes } from '../../slices/searchSlice/searchSlice';
 import { Img } from '../../styles/Img';
 import { MemeWrapper } from '../../styles/MemeWrapper';
+import { StyledHeader } from '../../styles/HeaderTextStyle';
 
 interface SearchSuggestionsProps {
   onMemeClick: (meme: Meme) => void;
@@ -41,7 +42,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({  term, onMemeClic
 
   return (
     <div>
-      <h2>Search Suggestions</h2>
+      <StyledHeader>Search Suggestions</StyledHeader>
     
         <MemeWrapper>
           {suggestions.map((gif) => (

@@ -1,17 +1,15 @@
 import { Link } from "react-router-dom";
-import SearchBar from "../searchBar/SearchBar"
+import { HeaderSpan, HeaderWrapper } from "./style/Styles";
 
 
 
 export const Header: React.FC = () => {
 
-    const handleSearch = (term: string) => {
-
-    };
+   
 
     return (
-        <div style={{ width: '100%', display: 'flex' }}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <HeaderWrapper>
+            <HeaderSpan>
                 <span>
                     <Link to={'/'}>
                         Meme Portal
@@ -22,10 +20,10 @@ export const Header: React.FC = () => {
                         Categories
                     </Link>
                 </span>
+            </HeaderSpan>
+            <div >
+                
             </div>
-            <div style={{ marginLeft: "auto" }}>
-                <SearchBar onSearch={handleSearch} />
-            </div>
-        </div>
+        </HeaderWrapper>
     )
 }

@@ -10,7 +10,7 @@ export const Categories:React.FC = () => {
 
     return (
         <>
-        <GifCategoriesList onSelectCategory={setSelectedCategoryId}/>
+        <GifCategoriesList onSelectCategory={setSelectedCategoryId} />
         <GifCategories selectedCategoryId={selectedCategoryId}/>
         </>
     )

@@ -7,6 +7,7 @@ import { Meme } from '../../types/types';
 import { Img } from '../../styles/Img';
 import { MemeWrapper } from '../../styles/MemeWrapper';
 import { useNavigate } from 'react-router-dom';
+import { StyledHeader } from '../../styles/HeaderTextStyle';
 
 interface TrendingGifsType {
  
@@ -36,8 +37,8 @@ const TrendingGifs: React.FC<TrendingGifsType> = ({}) => {
   };
 
   return (
-    <div>
-      <h2>Trending Gifs</h2>
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <StyledHeader>Trending Gifs</StyledHeader>
      
         <MemeWrapper >
           {trendingGif.map((gif) => (

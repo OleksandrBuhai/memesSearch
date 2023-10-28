@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
 
+
+
 export const CategoriesWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  color: white;
+ 
 `;
 
 export const CategoryColumn = styled.div`
@@ -13,14 +17,21 @@ export const CategoryColumn = styled.div`
   justify-items: center;
   align-items: flex-start;
   font-size: 1.5rem;
+  
+
+  div{
+    &:hover {       
+      background-image: linear-gradient(to right, white, #00ff00);
+      -webkit-background-clip: text; 
+      background-clip: text;
+      color: transparent;
+     }
+  }
+ 
 `;
 
 
 
-export const CategoryColumnDiv = styled.div`
-  height: 5rem;
-  border: 1px solid black;
-`
 
 
 export const CategoryGrid = styled.div`
@@ -28,6 +39,7 @@ export const CategoryGrid = styled.div`
   grid-template-columns: auto auto auto auto;
   gap: 2rem;
   color: white;
+  
 `;
 
 

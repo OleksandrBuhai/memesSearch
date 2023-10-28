@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { AppThunkDispatch, RootState } from '../../../slices/store';
 import { fetchCategories, getRandomGif } from '../../../api/api';
-import { CategoriesWrapper, CategoryColumn, CategoryItem, CategoryGrid } from '../styles/Styles';
+import { AppThunkDispatch, RootState } from '../../../slices/store';
+import { StyledHeader } from '../../../styles/HeaderTextStyle';
+import { CategoriesWrapper, CategoryColumn, CategoryGrid, CategoryItem } from '../styles/Styles';
 
 interface GifCategoriesProps {
   onSelectCategory: (categoryId: string) => void;
@@ -37,12 +37,14 @@ export const GifCategoriesList: React.FC<GifCategoriesProps> = ({ onSelectCatego
   }, [categories]);
 
   return (
-    <div>
-      <h2>Categories</h2>
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <StyledHeader>Categories</StyledHeader>
       <CategoriesWrapper>
         <CategoryColumn>
           {categories.map(category => (
-            <div key={category} onClick={() => onSelectCategory(category)}>
+            <div
+              style={{cursor:'pointer'}}
+            key={category} onClick={() => onSelectCategory(category)}>
               {category}
             </div>
           ))}

@@ -11,7 +11,7 @@ import TrendingGifs from "../trendList/Trend";
 export const Main: React.FC = () => {
 
 
-    const {selectedMeme } = useSelector((state: RootState) => state.searchReducer);
+    const { selectedMeme } = useSelector((state: RootState) => state.searchReducer);
 
 
     return (
@@ -21,9 +21,8 @@ export const Main: React.FC = () => {
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/seacrhable" element={<MemeList />} />
                 {selectedMeme && (
-        
                <Route path="/selecetedMem" element={<SelectedMem/>} />
- 
+
              )}
             </Routes>
 

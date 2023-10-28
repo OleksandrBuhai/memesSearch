@@ -8,13 +8,13 @@ const BASE_URL = 'https://api.giphy.com/v1/gifs/';
 
 
 
-export const fetchMemes = createAsyncThunk('search/fetchMemes', async ({ searchTerm, page }: { searchTerm: string; page: number }) => {
+export const fetchMemes = createAsyncThunk('search/fetchMemes', async ({ searchTerm }: { searchTerm: string; }) => {
   try {
-    const limit = 10;
-    const response = await axios.get(`${BASE_URL}search?q=${searchTerm}&api_key=${API_KEY}&limit=${limit}&offset=${(page - 1) * limit}`);
+    
+    const response = await axios.get(`${BASE_URL}search?q=${searchTerm}&api_key=${API_KEY}`);
     return {
       memes: response.data.data,
-      totalPages: Math.ceil(response.data.pagination.total_count / limit),
+     
     };
   } catch (error: any) {
     throw error.response?.data?.message || 'Error fetching memes';
@@ -71,7 +71,7 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
 
 export const fetchCategoriesContent = createAsyncThunk('categories/fetchCategories', async (categoryId: string) => {
   try {
-    const response = await axios.get(`${BASE_URL}search?api_key=${API_KEY}&limit=5&offset=0&rating=g&lang=en&q=${categoryId}`);
+    const response = await axios.get(`${BASE_URL}search?api_key=${API_KEY}&offset=0&rating=g&lang=en&q=${categoryId}`);
     return response.data.data.map((category: any) => category.name);
   } catch (error: any) {
     throw error.response?.data?.message || 'Error fetching categories';
