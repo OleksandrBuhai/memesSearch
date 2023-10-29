@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import { fetchMemes } from '@/api/api';
+import { baseURL } from '@/router';
+import { setSearchTerm } from '@/slices/searchSlice/searchSlice';
+import { AppThunkDispatch } from '@/slices/store';
+import  { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchMemes } from '../../api/api';
-import { setSearchTerm } from '../../slices/searchSlice/searchSlice';
-import { AppThunkDispatch } from '../../slices/store';
-import { AnimatedButton, SearchInput } from './style/Styles';
-import { baseURL } from '../../router';
+import { SearchInput, AnimatedButton } from './style/Styles';
+
 
 interface SearchBarProps {
     onSearch: (term: string) => void;
@@ -29,7 +30,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                 type="text"
                 placeholder="Search for memes"
                 value={searchTerm}
-                onChange={(e) => setTerm(e.target.value)}
+                onChange={(e:any) => setTerm(e.target.value)}
             />
            <Link style={{width:'10%'}}   to={`${baseURL}/searchable`}> <AnimatedButton 
         

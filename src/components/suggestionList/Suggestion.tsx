@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import { fetchSuggestion } from '@/api/api';
+import { setSelectedMeme, setSimilarMemes } from '@/slices/searchSlice/searchSlice';
+import { RootState, AppThunkDispatch } from '@/slices/store';
+import { StyledHeader } from '@/styles/HeaderTextStyle';
+import { Img } from '@/styles/Img';
+import { MemeWrapper } from '@/styles/MemeWrapper';
+import { Meme } from '@/types/types';
+import  { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSuggestion } from '../../api/api';
-import { AppThunkDispatch, RootState } from '../../slices/store';
-import { Meme } from '../../types/types';
-import { setSelectedMeme, setSimilarMemes } from '../../slices/searchSlice/searchSlice';
-import { Img } from '../../styles/Img';
-import { MemeWrapper } from '../../styles/MemeWrapper';
-import { StyledHeader } from '../../styles/HeaderTextStyle';
+
 
 interface SearchSuggestionsProps {
   onMemeClick: (meme: Meme) => void;
@@ -16,7 +17,7 @@ interface SearchSuggestionsProps {
 
 
 
-const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({  term, onMemeClick }) => {
+export const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({  term, onMemeClick }) => {
  
     const suggestions = useSelector((state:RootState)=> state.suggestionReducer.suggestions)
 
@@ -59,4 +60,3 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({  term, onMemeClic
   );
 };
 
-export default SearchSuggestions;

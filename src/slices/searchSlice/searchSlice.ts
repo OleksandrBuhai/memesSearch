@@ -1,6 +1,6 @@
+import { fetchMemes } from '@/api/api';
+import { Meme } from '@/types/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { fetchMemes } from '../../api/api';
-import { Meme } from '../../types/types';
 
 
 interface SearchState {
@@ -51,7 +51,6 @@ const searchSlice = createSlice({
       })
       .addCase(fetchMemes.fulfilled, (state, action) => {
         state.memes = action.payload.memes;
-        
         state.loading = false;
         state.selectedMeme = null;
       })

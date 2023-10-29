@@ -1,6 +1,7 @@
+import { fetchSuggestion } from '@/api/api';
+import { Meme } from '@/types/types';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchSuggestion } from '../../api/api';
-import { Meme } from '../../types/types';
+
 
 
 

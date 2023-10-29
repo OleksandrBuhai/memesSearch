@@ -6,7 +6,7 @@ export const HeaderWrapper = styled.div`
     display: flex;
     padding: 5rem;
     gap: 40rem;
-    background:  url('/src/assets/background.jpg')center/cover no-repeat;
+    background:  url('assets/background.jpg')center/cover no-repeat;
     height:100%;
 `
 

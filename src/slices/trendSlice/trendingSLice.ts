@@ -1,5 +1,6 @@
+import { fetchTrendingGif } from '@/api/api';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchTrendingGif } from '../../api/api';
+
 
 interface TrendingGifsState {
   trendingGifs: any[];

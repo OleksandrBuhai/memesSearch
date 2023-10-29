@@ -35,7 +35,6 @@ export const getRandomGif = async (): Promise<string> => {
 };
 
 
-
 export const fetchSuggestion = createAsyncThunk('search/suggestion', async ({ term }: { term: string }) => {
   try {
     const response = await axios.get(`${BASE_URL}search?q=${encodeURIComponent(term)}&api_key=${API_KEY}`)

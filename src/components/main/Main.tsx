@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import { RootState } from "../../slices/store";
+import { baseURL } from "@/router";
+import { RootState } from "@/slices/store";
 import { Categories } from "../categoriesList/Categories";
-import MemeList from "../memeList/MemeList";
+import {MemeList} from "../memeList/MemeList";
 import { SelectedMem } from "../selectedMem/SelectedMem";
-import TrendingGifs from "../trendList/Trend";
-import { baseURL } from "../../router";
+import {TrendingGifs} from "../trendList/Trend";
 
 
 export const Main: React.FC = () => {
@@ -16,7 +16,7 @@ export const Main: React.FC = () => {
 
     return (
        <Routes>
-            {/* Змініть шлях на '/' */}
+            
             <Route path={`${baseURL}`} element={<TrendingGifs />} />
             <Route path={`${baseURL}/categories`} element={<Categories />} />
             <Route path={`${baseURL}/searchable`} element={<MemeList />} />

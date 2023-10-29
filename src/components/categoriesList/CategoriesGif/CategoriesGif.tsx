@@ -1,14 +1,15 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchCategoryContentFailure, fetchCategoryContentStart } from '../../../slices/categoriesSlice/categoriesSelectSlice';
-import { setSelectedMeme } from '../../../slices/searchSlice/searchSlice';
-import { AppThunkDispatch } from '../../../slices/store';
-import { StyledHeader } from '../../../styles/HeaderTextStyle';
-import { Img } from '../../../styles/Img';
-import { MemeWrapper } from '../../../styles/MemeWrapper';
-import { Meme } from '../../../types/types';
+import { Meme } from '@/types/types';
+import { baseURL } from '@/router';
+import { fetchCategoryContentStart, fetchCategoryContentFailure } from '@/slices/categoriesSlice/categoriesSelectSlice';
+import { setSelectedMeme } from '@/slices/searchSlice/searchSlice';
+import { AppThunkDispatch } from '@/slices/store';
+import { StyledHeader } from '@/styles/HeaderTextStyle';
+import { Img } from '@/styles/Img';
+import { MemeWrapper } from '@/styles/MemeWrapper';
 
 interface GifListProps {
   selectedCategoryId: string | null;
@@ -50,7 +51,7 @@ export const GifCategories: React.FC<GifListProps> = ({ selectedCategoryId }) =>
     };
   
     dispatch(setSelectedMeme(selectedMeme));
-    navigate('/selecetedMem');
+    navigate(`${baseURL}/selectedMem`);
   };
 
   return (

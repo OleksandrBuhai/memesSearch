@@ -1,6 +1,7 @@
+import { baseURL } from "@/router";
 import { Link } from "react-router-dom";
-import { HeaderSpan, HeaderWrapper } from "./style/Styles";
-import { baseURL } from "../../router";
+import { HeaderWrapper, HeaderSpan } from "./style/Styles";
+
 
 
 
@@ -22,8 +23,7 @@ export const Header: React.FC = () => {
                     </Link>
                 </span>
             </HeaderSpan>
-            <div >
-                
+            <div>
             </div>
         </HeaderWrapper>
     )

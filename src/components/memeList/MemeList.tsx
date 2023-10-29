@@ -1,15 +1,15 @@
-import React from 'react';
-import { Meme } from '../../types/types';
-import { Img } from '../../styles/Img';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../slices/store';
-import { setSelectedMeme } from '../../slices/searchSlice/searchSlice';
-import { useNavigate } from 'react-router-dom';
-import { baseURL } from '../../router';
+import { baseURL } from "@/router";
+import { setSelectedMeme } from "@/slices/searchSlice/searchSlice";
+import { RootState } from "@/slices/store";
+import { Img } from "@/styles/Img";
+import { Meme } from "@/types/types";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 
-const MemeList: React.FC= () => {
+
+export const MemeList: React.FC= () => {
 
 
   const { memes } = useSelector((state: RootState) => state.searchReducer);
@@ -48,4 +48,4 @@ const MemeList: React.FC= () => {
       );
 };
 
-export default MemeList;
+

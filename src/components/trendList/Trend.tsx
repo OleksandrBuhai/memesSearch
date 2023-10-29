@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react';
+import { fetchTrendingGif, fetchSuggestion } from '@/api/api';
+import { baseURL } from '@/router';
+import { setSelectedMeme, setSimilarMemes } from '@/slices/searchSlice/searchSlice';
+import { RootState, AppThunkDispatch } from '@/slices/store';
+import { StyledHeader } from '@/styles/HeaderTextStyle';
+import { Img } from '@/styles/Img';
+import { MemeWrapper } from '@/styles/MemeWrapper';
+import { Meme } from '@/types/types';
+import  { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSuggestion, fetchTrendingGif } from '../../api/api';
-import { AppThunkDispatch, RootState } from '../../slices/store';
-import { setSelectedMeme, setSimilarMemes } from '../../slices/searchSlice/searchSlice';
-import { Meme } from '../../types/types';
-import { Img } from '../../styles/Img';
-import { MemeWrapper } from '../../styles/MemeWrapper';
 import { useNavigate } from 'react-router-dom';
-import { StyledHeader } from '../../styles/HeaderTextStyle';
-import { baseURL } from '../../router';
 
 interface TrendingGifsType {
  
 }
 
-const TrendingGifs: React.FC<TrendingGifsType> = ({}) => {
+export const TrendingGifs: React.FC<TrendingGifsType> = ({}) => {
 
   const trendingGif = useSelector((state:RootState)=> state.trendingGifReducer.trendingGifs) 
+  const loading = useSelector((state: RootState) => state.trendingGifReducer.loading);
 
   const dispatch = useDispatch<AppThunkDispatch>()
   const navigate = useNavigate()
@@ -41,20 +42,19 @@ const TrendingGifs: React.FC<TrendingGifsType> = ({}) => {
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
       <StyledHeader>Trending Gifs</StyledHeader>
      
-        <MemeWrapper >
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <MemeWrapper>
           {trendingGif.map((gif) => (
-            <div key={gif.id}  onClick={() => handleMemeClick(gif)}>
-
-              <Img
-                src={gif.images.fixed_height.url}
-                alt={gif.title} 
-              />
+            <div key={gif.id} onClick={() => handleMemeClick(gif)}>
+              <Img src={gif.images.fixed_height.url} alt={gif.title} />
             </div>
           ))}
         </MemeWrapper>
+      )}
     
     </div>
   );
 };
 
-export default TrendingGifs;

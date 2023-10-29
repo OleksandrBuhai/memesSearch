@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { fetchCategories, getRandomGif } from '@/api/api';
+import { AppThunkDispatch, RootState } from '@/slices/store';
+import { StyledHeader } from '@/styles/HeaderTextStyle';
+import  { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories, getRandomGif } from '../../../api/api';
-import { AppThunkDispatch, RootState } from '../../../slices/store';
-import { StyledHeader } from '../../../styles/HeaderTextStyle';
 import { CategoriesWrapper, CategoryColumn, CategoryGrid, CategoryItem } from '../styles/Styles';
+
+
 
 interface GifCategoriesProps {
   onSelectCategory: (categoryId: string) => void;
@@ -12,6 +14,7 @@ interface GifCategoriesProps {
 export const GifCategoriesList: React.FC<GifCategoriesProps> = ({ onSelectCategory }) => {
   const dispatch = useDispatch<AppThunkDispatch>();
   const categories = useSelector((state: RootState) => state.categoriesReducer.categories);
+  const loading = useSelector((state:RootState)=> state.categoriesReducer.loading)
   const [categoryGifs, setCategoryGifs] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
@@ -49,7 +52,11 @@ export const GifCategoriesList: React.FC<GifCategoriesProps> = ({ onSelectCatego
             </div>
           ))}
         </CategoryColumn>
-        <CategoryGrid>
+
+        {loading ? (
+        <p>Loading...</p>
+      ) :
+        (<CategoryGrid>
           {categories.map(category => (
             <CategoryItem
               key={category}
@@ -59,7 +66,7 @@ export const GifCategoriesList: React.FC<GifCategoriesProps> = ({ onSelectCatego
               <p>{category}</p>
             </CategoryItem>
           ))}
-        </CategoryGrid>
+        </CategoryGrid>)}
       </CategoriesWrapper>
     </div>
   );

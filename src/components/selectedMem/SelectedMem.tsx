@@ -1,10 +1,12 @@
+import { setSelectedMeme } from "@/slices/searchSlice/searchSlice";
+import { RootState } from "@/slices/store";
+import { StyledHeader } from "@/styles/HeaderTextStyle";
+import { Img } from "@/styles/Img";
+import { Meme } from "@/types/types";
 import { useDispatch, useSelector } from "react-redux"
-import { setSelectedMeme } from "../../slices/searchSlice/searchSlice"
-import { Img } from "../../styles/Img"
-import { Meme } from "../../types/types"
-import SearchSuggestions from "../suggestionList/Suggestion"
-import { RootState } from "../../slices/store"
-import { StyledHeader } from "../../styles/HeaderTextStyle"
+import {SearchSuggestions} from "../suggestionList/Suggestion";
+
+
 
 
 

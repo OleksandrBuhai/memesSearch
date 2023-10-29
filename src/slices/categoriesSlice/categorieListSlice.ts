@@ -1,5 +1,6 @@
+import { fetchCategories } from '@/api/api';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { fetchCategories } from '../../api/api';
+
 
 interface CategoriesState {
   selectedCategory: string | null;
@@ -26,11 +27,20 @@ const categoriesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchCategories.fulfilled, (state, action) => {
+    builder
+    .addCase(fetchCategories.fulfilled, (state, action) => {
       state.categories = action.payload;
       state.loading = false;
       state.error = null;
-    });
+    })
+    .addCase(fetchCategories.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message || 'Error fetching memes';
+    })
+    .addCase(fetchCategories.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
   },
 
   
